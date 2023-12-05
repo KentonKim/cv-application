@@ -26,7 +26,7 @@ function Section({data, onHandle, arrayOfInputs}) {
   )
 }
 
-function Paper({data}) {
+function Paper({personal, academic, work, projects, skills}) {
   return(
     <div className="w-[510px] h-[660px] bg-white text-black font-serif">
       <div className="border-solid border-black border-2">
