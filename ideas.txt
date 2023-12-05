@@ -1,0 +1,23 @@
+left side
+    header with different sections of resume
+        personal
+            name, email, number
+        academic
+            location, date
+            major 
+        projects
+            title, location, date
+            description #1
+            description #2
+            description #3
+        work experience
+            title, location, date
+            description #1
+            description #2
+            description #3
+        other skillls
+            list of skills
+            
+right side
+    blank paper
+        personal, academic,  projects, work experience, other skills
