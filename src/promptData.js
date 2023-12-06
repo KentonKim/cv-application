@@ -3,18 +3,21 @@ const personalPromptData= [
     id: "name",
     label: "Name: ",
     example: "John Smith",
+    isRequired: true,
   },
   { 
     id: "email",
     label: "Email: ",
     example: "JohnSmith@gmail.com",
-    type: "email"
+    type: "email",
+    isRequired: true,
   },
   { 
     id: "phone",
     label: "Phone Number: ",
     example: "###-###-####",
-    type: "tel"
+    type: "tel",
+    isRequired: true,
   }
 ]
 
