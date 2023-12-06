@@ -1,24 +1,45 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import { Paper, Section } from './components'
+import { Paper, Section, DraggableButton} from './components'
 import './App.css'
 import { personalPromptData, schoolPromptData, workPromptData, projectsPromptData, skillsPromptData } from './promptData'
 
 function App() {
-  const [section, setSection] = useState('personal')
+  const [sectionArray, setSectionArray] = useState([
+    {
+      sectionName: "Personal",
+      isSelected: true,
+    },
+    {
+      sectionName: "Academic",
+      isSelected: false,
+    },
+    {
+      sectionName: "Work",
+      isSelected: false,
+    },
+    {
+      sectionName: "Projects",
+      isSelected: false,
+    },
+    {
+      sectionName: "Skills",
+      isSelected: false,
+    },
+
+  ])
   const [personalData, setPersonalData] = useState({})
   const [academicData, setAcademicData] = useState({})
   const [workData, setWorkData] = useState({})
   const [projectsData, setProjectData] = useState({})
   const [skillsData, setSkillsData] = useState({})
 
-  const handleDataChange = (e, func, data) => {
-    func({
+  const handleDataChange = (e, setStateFunc, data) => {
+    setStateFunc({
       ...data,
       [e.target.id] : e.target.value
     })
-    console.log(data)
   }
 
   return (
@@ -26,54 +47,72 @@ function App() {
       <div id='left-side' className="">
         <div> {/* form customizer */}
           <div> { /* form header */ }
-            <button onClick={() => setSection('personal')}>Personal</button>
-            <button onClick={() => setSection('academic')}>Academic</button>
-            <button onClick={() => setSection('work')}>Work Experience</button>
-            <button onClick={() => setSection('projects')}>Projects</button>
-            <button onClick={() => setSection('skills')}>Skills</button>
+            {sectionArray.map( sectionObj => (
+              <DraggableButton key={sectionObj.sectionName} text={sectionObj.sectionName} handleClick={ () => {
+                setSectionArray( sectionArray.map( obj => {
+                  if (obj === sectionObj) {
+                    return {...obj, 'isSelected':true}
+                  } else {
+                    return {...obj , 'isSelected':false}
+                  }
+                }))
+              }}/>
+            ))}
           </div>
         </div>
         <div> { /* Holder for the information shit */ }
-          {section === "personal" && 
+          {sectionArray[0]['isSelected'] && 
           <Section 
+            key={'personalSection'}
             data={personalData} 
             onHandle={(e)=> {
               handleDataChange(e, setPersonalData, personalData)
             }} 
             arrayOfInputs={personalPromptData}
           />}
-          {section === "academic" && 
+          {sectionArray[1]['isSelected'] && 
           <Section
+            key={'academicSection'}
             data={academicData}
             onHandle={(e)=> {
               handleDataChange(e, setAcademicData, academicData)
             }} 
             arrayOfInputs={schoolPromptData}
           />} 
-          {section === "work" &&
+          {sectionArray[2]['isSelected'] &&
           <Section 
+            key={'workSection'}
             data={workData} 
             onHandle={(e)=> {
               handleDataChange(e, setWorkData, workData)
             }} 
             arrayOfInputs={workPromptData}
           />}
-          {section === "projects" &&
+          {sectionArray[3]['isSelected'] &&
           <Section
+            key={'projectsSection'}
             data={projectsData}
             onHandle={(e)=> {
               handleDataChange(e, setProjectData, projectsData)
             }} 
             arrayOfInputs={projectsPromptData}
           />}
-          {section === "skills" &&
+          {sectionArray[4]['isSelected'] &&
           <Section
+            key={'skillsSection'}
             data={skillsData}
             onHandle={(e)=> {
               handleDataChange(e, setSkillsData, skillsData)
             }}
             arrayOfInputs={skillsPromptData}
           />}
+        </div>
+        <div> { /* Show data  */}
+          <div>{Object.entries(personalData).map(([keys,values])=> (<div>{`${keys}:${values}`}</div>))}</div>
+          <div>{Object.entries(academicData).map(([keys,values])=> (<div>{`${keys}:${values}`}</div>))}</div>
+          <div>{Object.entries(workData).map(([keys,values])=> (<div>{`${keys}:${values}`}</div>))}</div>
+          <div>{Object.entries(projectsData).map(([keys,values])=> (<div>{`${keys}:${values}`}</div>))}</div>
+          <div>{Object.entries(skillsData).map(([keys,values])=> (<div>{`${keys}:${values}`}</div>))}</div>
         </div>
       </div>
       <div id='right-side'>
