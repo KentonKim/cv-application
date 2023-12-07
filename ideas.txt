@@ -1,10 +1,4 @@
 TODO
-- addition of new skills
-- deletion of skills (if more than one)
-
-- addition of descriptions (work/projects)
-- deletion of descriptions (if more than one)
-
 - addition of schools/work/projects
 - deletion of schools/work/projects ( if more than one )
 
@@ -19,8 +13,3 @@ TODO
 
 - display information on right side
 - make information on right side downloadable
-
-
-
-set multiple initially to two
-and then for each render, create the amount ofm ultiples for the maount of multiple
