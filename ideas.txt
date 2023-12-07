@@ -1,23 +1,15 @@
-left side
-    header with different sections of resume
-        personal
-            name, email, number
-        academic
-            location, date
-            major 
-        projects
-            title, location, date
-            description #1
-            description #2
-            description #3
-        work experience
-            title, location, date
-            description #1
-            description #2
-            description #3
-        other skillls
-            list of skills
-            
-right side
-    blank paper
-        personal, academic,  projects, work experience, other skills
+TODO
+- addition of schools/work/projects
+- deletion of schools/work/projects ( if more than one )
+
+- when focused on section:
+    - display buttons on side
+    - add button within section
+    - delete button wtihin section
+- show/hide button within section
+
+- indicate progress of completion
+    - check each section for completion
+
+- display information on right side
+- make information on right side downloadable
