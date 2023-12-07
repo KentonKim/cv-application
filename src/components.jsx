@@ -45,75 +45,35 @@ const Paper = ({personal, academic, work, projects, skills}) => {
 }
 
 const DraggableButton = ({handleClick, text}) => {
-  const [isMouseDown, setIsMouseDown] = useState(false);
-  const [isMouseDownInsideButton, setIsMouseDownInsideButton] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const buttonRef = React.createRef();
-  
-  useEffect(() => {
-    const handleMouseDown = (event) => {
-      const buttonRect = buttonRef.current.getBoundingClientRect();
-      const isMouseDownInsideButton =
-          event.clientX >= buttonRect.left &&
-          event.clientX <= buttonRect.right &&
-          event.clientY >= buttonRect.top &&
-          event.clientY <= buttonRect.bottom;
-  
-      setIsMouseDown(true);
-      setIsMouseDownInsideButton(isMouseDownInsideButton);
-  
-      // If the mouse down is inside the button, update the position
-      if (isMouseDownInsideButton) {
-        setPosition({ x: event.clientX - buttonRect.left, y: event.clientY - buttonRect.top });
-      }
-    };
-  
-    const handleMouseUp = () => {
-      setIsMouseDown(false);
-      setIsMouseDownInsideButton(false);
-    };
-  
-    const handleMouseMove = (event) => {
-      if (isMouseDown) {
-        const buttonRect = buttonRef.current.getBoundingClientRect();
-        const isMouseOutsideButton =
-            event.clientX < buttonRect.left ||
-            event.clientX > buttonRect.right ||
-            event.clientY < buttonRect.top ||
-            event.clientY > buttonRect.bottom;
-  
-        if (isMouseOutsideButton && isMouseDownInsideButton) {
-          // Update the position based on mouse movement
-          setPosition({ x: event.clientX - buttonRect.left, y: event.clientY - buttonRect.top });
-        }
-      }
-    };
-  
-    const handleMouseUpOutsideButton = () => {
-      setIsMouseDown(false);
-      setIsMouseDownInsideButton(false);
-    };
-  
-  
-    document.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUpOutsideButton);
-  
-    return () => {
-      document.removeEventListener('mousedown', handleMouseDown);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUpOutsideButton);
-    };
-  }, [isMouseDown, isMouseDownInsideButton]);
-  
+  const handleMouseUp = (event) => {
+    const buttonRect = buttonRef.current.getBoundingClientRect();
+    if (event.clientX < buttonRect.left ) {
+      // switch tabs left 
+    } else if (event.clientX > buttonRect.right) {
+      // switch tabs right
+    }
+
+    document.removeEventListener('mouseup', handleMouseUp)
+  }
   return (
-    <button style={{ position: 'absolute', left: position.x, top: position.y }}
+    <button 
       ref={buttonRef}
       onClick={handleClick}
+      onMouseDown={() => {
+        document.addEventListener('mouseup', handleMouseUp)
+      }}
     >{text}</button>
   );
 };
 
 export {Section, Paper, DraggableButton}
+
+
+/*
+mouse down
+- adds event listener for mouseup
+mouse up
+- clears event listener
+- if the mouse is to the left or right of button, change order
+*/
