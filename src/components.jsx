@@ -1,34 +1,61 @@
 import React, { useState, useEffect } from 'react';
 
 const Section = ({data, onHandle, arrayOfInputs}) => {
-  return(
-    <form>{arrayOfInputs.map(inputObj => {
-      return (
+  const [multiple, setMultiple] = useState(2)
+  const attributes = (data, inputObj, onHandle, version = 0 ) => {
+    const conditionalType = (inputObj.type && inputObj.type)
+    const conditionalPlaceholder = (inputObj.example && inputObj.example)
+    const conditionalRequired = (inputObj.isRequired && inputObj.isRequired)
+    const conditionalIdAndKey = ( version == 0 ? inputObj.id : `${inputObj.id}-${version}` )
+    return {
+      type: conditionalType,
+      id: conditionalIdAndKey,
+      key: conditionalIdAndKey,
+      placeholder: conditionalPlaceholder,
+      onChange: onHandle,
+      required: conditionalRequired,
+      value: data[inputObj.id],
+    }
+  }
+
+  const formArray = []
+  arrayOfInputs.map(inputObj => {
+    if (inputObj.isMultiple) {
+      for (let i = 0; i < multiple; i += 1) {
+        formArray.push(
+          <>
+            <label key={`${inputObj.id}${i == 0 ? '-' : `-${i}-`}label`} htmlFor={`${inputObj.id}${i == 0 ? '' : `-${i}` }`}>{inputObj.label}</label>
+            { inputObj.isLongResponse ?
+              <textarea {...attributes(data, inputObj, onHandle, i)}></textarea> :
+              <input {...attributes(data, inputObj, onHandle, i)}></input>
+            }
+            { (inputObj != arrayOfInputs[arrayOfInputs.length - 1] || i != multiple - 1) && <br/> }
+          </>
+        )
+      }
+      formArray.push(
         <>
-          <label key={`${inputObj.id}-label`} htmlFor={inputObj.id}>{inputObj.label}</label>
-          { inputObj['isLongResponse'] ?
-            <textarea
-              type={(inputObj.type && inputObj.type)}
-              id={inputObj.id}
-              key={inputObj.id}
-              placeholder={(inputObj.example && inputObj.example)}
-              onChange={onHandle}
-              required={inputObj.isRequired && inputObj.isRequired}
-              value={data[inputObj.id]}
-            ></textarea> :
-            <input 
-              type={(inputObj.type && inputObj.type)}
-              id={inputObj.id}
-              key={inputObj.id}
-              placeholder={(inputObj.example && inputObj.example)}
-              onChange={onHandle}
-              required={inputObj.isRequired && inputObj.isRequired}
-              value={data[inputObj.id]}
-            ></input>}
-          {inputObj != arrayOfInputs[arrayOfInputs.length - 1] && <br/>}
+          <br/>
+          {multiple < 5 && <button onClick={()=> setMultiple(multiple + 1)}><strong>+</strong></button>}
+          {multiple > 1 && <button onClick={() => setMultiple(multiple-1)}><strong>-</strong></button>}
         </>
       )
-    })}</form>
+    } else {
+      formArray.push(
+        <>
+          <label key={`${inputObj.id}-label`} htmlFor={inputObj.id}>{inputObj.label}</label>
+          { inputObj.isLongResponse ?
+            <textarea {...attributes(data, inputObj, onHandle)}></textarea> :
+            <input {...attributes(data, inputObj, onHandle)}></input>
+          }
+          { inputObj != arrayOfInputs[arrayOfInputs.length - 1] && <br/> }
+        </>
+      )
+    }
+  })
+
+  return(
+    <form>{formArray}</form>
   )
 }
 
