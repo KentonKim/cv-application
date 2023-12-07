@@ -19,3 +19,8 @@ TODO
 
 - display information on right side
 - make information on right side downloadable
+
+
+
+set multiple initially to two
+and then for each render, create the amount ofm ultiples for the maount of multiple

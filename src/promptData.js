@@ -76,23 +76,12 @@ const workPromptData = [
     type: "date"
   },   
   { 
-    id: "description1",
+    id: "description",
     label: "Description: ",
     example: "",
-    isLongResponse: true
+    isLongResponse: true,
+    isMultiple: true,
   },
-  { 
-    id: "description2",
-    label: "Description: ",
-    example: "",
-    isLongResponse: true
-  },
-  { 
-    id: "description3",
-    label: "Description: ",
-    example: "",
-    isLongResponse: true
-  }
 ]
 
 const projectsPromptData = [
@@ -114,27 +103,18 @@ const projectsPromptData = [
     id: "description1",
     label: "Description: ",
     example: "",
+    isLongResponse: true,
+    isMultiple: true,
   },
-  { 
-    id: "description2",
-    label: "Description: ",
-    example: "",
-  }
 ]
 
 const skillsPromptData = [
   {
     id: "skill1",
     label: "Skill: ",
+    isLongResponse: true,
+    isMultiple: true,
   },
-  { 
-    id: "skill2",
-    label: "Skill: ",
-  },
-  { 
-    id: "skill3",
-    label: "Skill: ",
-  }
 ]
 
 export {personalPromptData, schoolPromptData, workPromptData, projectsPromptData, skillsPromptData}
