@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import { Paper, Section, DraggableButton} from './components'
 import './App.css'
 import { personalPromptData, schoolPromptData, workPromptData, projectsPromptData, skillsPromptData } from './promptData'
@@ -53,14 +51,12 @@ function App() {
     if (tabObj.amount) {
       for (let i = 0; i < tabObj.amount; i += 1) {
         sectionArray.push(
-          <>
-            <Section 
-              key = {`${key}${i == 0 ? '' : `-${i}`}`}
-              data = {data[i]}
-              onHandle = {(e) => {handleDataChange(e, setData, data, i)}}
-              arrayOfPrompts = {arrayOfPrompts}
-            />
-          </>
+          <Section 
+            key = {`${key}${i == 0 ? '' : `-${i}`}`}
+            data = {data[i]}
+            onHandle = {(e) => {handleDataChange(e, setData, data, i)}}
+            arrayOfPrompts = {arrayOfPrompts}
+          />
         )
       }
       sectionArray.push(
@@ -136,20 +132,10 @@ function App() {
             createSectionArray(tabArray, 4, 'skillsSection', skillsData, setSkillsData, skillsPromptData)
           }
         </div>
-        <div> { /* Show data  */}
-{/* 
-          <div>{Object.entries(personalData).map(([keys,values])=> (<div>{`${keys}:${values}`}</div>))}</div>
-          <div>{Object.entries(academicData).map(([keys,values])=> (<div>{`${keys}:${values}`}</div>))}</div>
-          <div>{Object.entries(workData).map(([keys,values])=> (<div>{`${keys}:${values}`}</div>))}</div>
-          <div>{Object.entries(projectsData).map(([keys,values])=> (<div>{`${keys}:${values}`}</div>))}</div>
-          <div>{Object.entries(skillsData).map(([keys,values])=> (<div>{`${keys}:${values}`}</div>))}</div>
- */}
-        </div>
       </div>
       <div id='right-side'>
-        {/* <Paper data={} /> */}
+        <Paper personal={personalData} academic={academicData} work={workData} projects={projectsData} skills={skillsData} />
       </div>
-
     </div>
   )
 }

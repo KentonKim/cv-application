@@ -1,6 +1,4 @@
 TODO
-- handleDataChange
-
 - when focused on section:
     - display buttons on side
     - add button within section

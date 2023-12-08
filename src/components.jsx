@@ -26,7 +26,7 @@ const Section = ({data, onHandle, arrayOfPrompts}) => {
           <>
             <label key={`${inputObj.id}${i == 0 ? '-' : `-${i}-`}label`} htmlFor={`${inputObj.id}${i == 0 ? '' : `-${i}` }`}>{inputObj.label}</label>
             { inputObj.isLongResponse ?
-              <textarea {...attributes(data, inputObj, onHandle, i)}></textarea> :
+              <textarea className='resize-none' {...attributes(data, inputObj, onHandle, i)}></textarea> :
               <input {...attributes(data, inputObj, onHandle, i)}></input>
             }
             { (inputObj != arrayOfPrompts[arrayOfPrompts.length - 1] || i != multiple - 1) && <br/> }
@@ -45,7 +45,7 @@ const Section = ({data, onHandle, arrayOfPrompts}) => {
         <>
           <label key={`${inputObj.id}-label`} htmlFor={inputObj.id}>{inputObj.label}</label>
           { inputObj.isLongResponse ?
-            <textarea {...attributes(data, inputObj, onHandle)}></textarea> :
+            <textarea className='resize-none' {...attributes(data, inputObj, onHandle)}></textarea> :
             <input {...attributes(data, inputObj, onHandle)}></input>
           }
           { inputObj != arrayOfPrompts[arrayOfPrompts.length - 1] && <br/> }
@@ -60,12 +60,39 @@ const Section = ({data, onHandle, arrayOfPrompts}) => {
 }
 
 const Paper = ({personal, academic, work, projects, skills}) => {
+  // all in the form of [{},{},...]
+  const academicArray = []
+  const workArray = []
+  const projectsArray = []
+  const skillsArray = []
+
   return(
-    <div className="w-[510px] h-[660px] bg-white text-black font-serif">
-      <div className="border-solid border-black border-2">
-        {Object.entries(data).map(([key,value]) => (
-          <div key={key}>{value}</div>
-        ))}
+    <div className="w-[8.5in] h-[11in] bg-white border-2 shadow-lg font-serif pt-[0.5in] pl-[1in] pr-[1in] text-[12pt]">
+      {/* Personal Section */}
+      <div className='section personal'>
+        <div>{personal[0].name}</div>
+        <div>{personal[0].email}</div>
+        <div>{personal[0].phone}</div>
+      </div>
+      {/* Academic Section */}
+      <div><strong>Education</strong></div>
+      <div className='section academic'>
+        {academicArray}
+      </div>
+      {/* Work Section */}
+      <div><strong>Work Experience</strong></div>
+      <div className='section work'>
+        {workArray}
+      </div>
+      {/* Projects Section */}
+      <div><strong>Projects</strong></div>
+      <div className='section projects'>
+        {projectsArray}
+      </div>
+      {/* Skills Section */}
+      <div><strong>Skills</strong></div>
+      <div className='section skills'>
+        {skillsArray}
       </div>
     </div>
   )
