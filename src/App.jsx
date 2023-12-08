@@ -38,12 +38,15 @@ function App() {
   const [projectsData, setProjectData] = useState([{}])
   const [skillsData, setSkillsData] = useState([{}])
 
-  const handleDataChange = (e, setStateFunc, data, i = 0) => { // TODO 
-    setStateFunc({
-      ...data,
+  const handleDataChange = (e, setStateFunc, data, index = 0) => { // TODO 
+    const newDataArray = data.map(sectionObj => { return {...sectionObj}})
+    newDataArray[index] = { 
+      ...newDataArray[index],
       [e.target.id] : e.target.value
-    })
+    }
+    setStateFunc(newDataArray)
   }
+
 
   const createSectionArray = (tabData, tabNumber, key, data, setData, arrayOfPrompts) => {
     const tabObj = tabData[tabNumber]
@@ -71,7 +74,8 @@ function App() {
                 return {...obj}
               }
             }))
-            setData([...data, {}])
+            const newData = data.map(dataObj => {return {...dataObj}}) 
+            setData([...newData, {}])
           }}><strong>+</strong></button>}
           {tabObj.amount > 1 && <button onClick={() => {
             setTabArray( tabArray.map( obj => {
@@ -81,13 +85,19 @@ function App() {
                 return {...obj}
               }
             }))
-            setData([...data])
-            data.pop()
+            const newData = data.map(dataObj => {return {...dataObj}}) 
+            newData.pop()
+            setData(newData)
           }}><strong>-</strong></button>}
         </>
       )
     } else {
-      console.log('This tab object does not have multiple sections')
+      sectionArray.push(<Section 
+        key = {key} 
+        data = {data[0]}
+        onHandle = {(e) => {handleDataChange(e, setData, data)}}
+        arrayOfPrompts = {arrayOfPrompts}
+      />)
     }
     return sectionArray
   }
@@ -112,12 +122,8 @@ function App() {
         </div>
         <div> { /* Holder for the information shit */ }
           {tabArray[0]['isSelected'] && 
-          <Section 
-            key={'personalSection'}
-            data={personalData} 
-            onHandle={(e)=> {handleDataChange(e, setPersonalData, personalData)}} 
-            arrayOfPrompts={personalPromptData}
-          />}
+            createSectionArray(tabArray, 0, 'personalSection', personalData, setPersonalData, personalPromptData)
+          }
           {tabArray[1]['isSelected'] && 
             createSectionArray(tabArray, 1, 'academicSection', academicData, setAcademicData, schoolPromptData)
           } 
@@ -128,12 +134,8 @@ function App() {
             createSectionArray(tabArray, 3, 'projectsSection', projectsData, setProjectData, projectsPromptData)
           }
           {tabArray[4]['isSelected'] &&
-          <Section
-            key={'skillsSection'}
-            data={skillsData}
-            onHandle={(e)=> {handleDataChange(e, setSkillsData, skillsData)}}
-            arrayOfPrompts={skillsPromptData}
-          />}
+            createSectionArray(tabArray, 4, 'skillsSection', skillsData, setSkillsData, skillsPromptData)
+          }
         </div>
         <div> { /* Show data  */}
 {/* 
