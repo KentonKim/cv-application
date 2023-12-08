@@ -38,7 +38,7 @@ function App() {
   const [projectsData, setProjectData] = useState([{}])
   const [skillsData, setSkillsData] = useState([{}])
 
-  const handleDataChange = (e, setStateFunc, data, index = 0) => { // TODO 
+  const handleDataChange = (e, setStateFunc, data, index = 0) => {
     const newDataArray = data.map(sectionObj => { return {...sectionObj}})
     newDataArray[index] = { 
       ...newDataArray[index],
