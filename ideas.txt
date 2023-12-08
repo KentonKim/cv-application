@@ -1,6 +1,5 @@
 TODO
-- addition of schools/work/projects
-- deletion of schools/work/projects ( if more than one )
+- handleDataChange
 
 - when focused on section:
     - display buttons on side
@@ -13,3 +12,5 @@ TODO
 
 - display information on right side
 - make information on right side downloadable
+
+- clear data option
