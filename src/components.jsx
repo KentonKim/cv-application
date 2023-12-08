@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Section = ({data, onHandle, arrayOfInputs}) => {
+const Section = ({data, onHandle, arrayOfPrompts}) => {
   const [multiple, setMultiple] = useState(2)
   const attributes = (data, inputObj, onHandle, version = 0 ) => {
     const conditionalType = (inputObj.type && inputObj.type)
@@ -19,7 +19,7 @@ const Section = ({data, onHandle, arrayOfInputs}) => {
   }
 
   const formArray = []
-  arrayOfInputs.map(inputObj => {
+  arrayOfPrompts.map(inputObj => {
     if (inputObj.isMultiple) {
       for (let i = 0; i < multiple; i += 1) {
         formArray.push(
@@ -29,7 +29,7 @@ const Section = ({data, onHandle, arrayOfInputs}) => {
               <textarea {...attributes(data, inputObj, onHandle, i)}></textarea> :
               <input {...attributes(data, inputObj, onHandle, i)}></input>
             }
-            { (inputObj != arrayOfInputs[arrayOfInputs.length - 1] || i != multiple - 1) && <br/> }
+            { (inputObj != arrayOfPrompts[arrayOfPrompts.length - 1] || i != multiple - 1) && <br/> }
           </>
         )
       }
@@ -48,7 +48,7 @@ const Section = ({data, onHandle, arrayOfInputs}) => {
             <textarea {...attributes(data, inputObj, onHandle)}></textarea> :
             <input {...attributes(data, inputObj, onHandle)}></input>
           }
-          { inputObj != arrayOfInputs[arrayOfInputs.length - 1] && <br/> }
+          { inputObj != arrayOfPrompts[arrayOfPrompts.length - 1] && <br/> }
         </>
       )
     }
