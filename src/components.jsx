@@ -14,7 +14,7 @@ const Section = ({data, onHandle, arrayOfPrompts}) => {
       placeholder: conditionalPlaceholder,
       onChange: onHandle,
       required: conditionalRequired,
-      value: data[inputObj.id],
+      value: data[conditionalIdAndKey],
     }
   }
 

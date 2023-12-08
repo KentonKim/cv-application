@@ -47,7 +47,6 @@ function App() {
     setStateFunc(newDataArray)
   }
 
-
   const createSectionArray = (tabData, tabNumber, key, data, setData, arrayOfPrompts) => {
     const tabObj = tabData[tabNumber]
     const sectionArray = []
