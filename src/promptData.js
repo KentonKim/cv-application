@@ -28,6 +28,11 @@ const schoolPromptData = [
     example: "University of College",
   },
   { 
+    id: "location",
+    label: "Location: ",
+    example: "City, State",
+  },
+  { 
     id: "start-date",
     label: "Start Date: ",
     type: "date"
@@ -45,7 +50,17 @@ const schoolPromptData = [
   { 
     id: "study",
     label: "Area of Study:",
-    example: "Basket Weaving"
+    example: "Underwater Basket Weaving"
+  },
+  { 
+    id: "minor",
+    label: "Minor:",
+    example: "Musical Performance",
+  },
+  { 
+    id: "gpa",
+    label: "GPA (optional):",
+    example: "2.0",
   }
 ]
 
@@ -100,7 +115,7 @@ const projectsPromptData = [
     type: "date"
   },
   { 
-    id: "description1",
+    id: "description",
     label: "Description: ",
     example: "",
     isLongResponse: true,
@@ -110,7 +125,7 @@ const projectsPromptData = [
 
 const skillsPromptData = [
   {
-    id: "skill1",
+    id: "description",
     label: "Skill: ",
     isLongResponse: true,
     isMultiple: true,

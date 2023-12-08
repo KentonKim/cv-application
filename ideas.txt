@@ -1,4 +1,17 @@
 TODO
+
+- display information on right side
+    - div for header (school, location) (position, company, location)
+        - create class
+    - div for date (start - end)
+        - create class
+    - div for information (description) (degree, area of study, gpa) (minor)
+        - create class
+
+- create conditional for header in reach
+    - for each object in array, check that length of entries is > 0
+
+
 - when focused on section:
     - display buttons on side
     - add button within section
@@ -8,7 +21,6 @@ TODO
 - indicate progress of completion
     - check each section for completion
 
-- display information on right side
 - make information on right side downloadable
 
 - clear data option
