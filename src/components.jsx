@@ -59,12 +59,59 @@ const Section = ({data, onHandle, arrayOfPrompts}) => {
   )
 }
 
+const convertDate = (inputDate) => {
+  // Parse the date
+  const parts = inputDate.split('-');
+  const month = parseInt(parts[1], 10);
+  const year = parseInt(parts[2], 10);
+
+  // Format the date
+  const formattedDate = new Date(year, month - 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  return formattedDate;
+}
+
 const Paper = ({personal, academic, work, projects, skills}) => {
-  // all in the form of [{},{},...]
-  const academicArray = []
-  const workArray = []
-  const projectsArray = []
-  const skillsArray = []
+
+  const arrayToJsx = (sectionObj) => {
+    const mountArray = []
+    const arrayOfDescriptions = []
+    let header = ''
+    let location = ''
+    let time = ''
+
+    header += sectionObj.school ?? ""
+    header += sectionObj.position ?? ""
+    header += sectionObj.company ? ` at ${sectionObj.company}` : ""
+    header += sectionObj.project ?? "" 
+    location += sectionObj ?? ""
+    time += sectionObj['start-date'] ? convertDate(sectionObj['start-date']) : ""
+    time += sectionObj['end-date'] ? 
+      sectionObj['start-date'] ? ` - ${convertDate(sectionObj['end-date'])}` : convertDate(sectionObj['end-date']) :
+      sectionObj['start-date'] ? " - Present" : ""
+    
+    if (sectionObj.degree || sectionObj.study || sectionObj.gpa) {
+      let academicDesc = "" 
+      academicDesc += sectionObj.degree ?? ""
+      academicDesc += `in ${sectionObj.study}` ?? ""
+      academicDesc += `, ${sectionObj.gpa}` ?? ""
+      arrayOfDescriptions.push(academicDesc)
+    }
+    if (sectionObj.minor) {
+      arrayOfDescriptions.push(`Minor in ${sectionObj.minor}`)
+    }
+    Object.entries(sectionObj)
+      .filter(([key]) => key.includes('description'))
+      .map(( [ _, value]) => arrayOfDescriptions.push(value))
+
+
+    mountArray.push(<div className='section-title'><strong>{header}</strong>{location}</div>)
+    mountArray.push(<div className='section-date'>{time}</div>)
+    for (let desc of arrayOfDescriptions) {
+      mountArray.push(<div className='section-title'>{desc}</div>)
+    }
+    return mountArray
+  }
+
 
   return(
     <div className="w-[8.5in] h-[11in] bg-white border-2 shadow-lg font-serif pt-[0.5in] pl-[1in] pr-[1in] text-[12pt]">
@@ -77,22 +124,22 @@ const Paper = ({personal, academic, work, projects, skills}) => {
       {/* Academic Section */}
       <div><strong>Education</strong></div>
       <div className='section academic'>
-        {academicArray}
+        {arrayToJsx(academic)}
       </div>
       {/* Work Section */}
       <div><strong>Work Experience</strong></div>
       <div className='section work'>
-        {workArray}
+        {arrayToJsx(work)}
       </div>
       {/* Projects Section */}
       <div><strong>Projects</strong></div>
       <div className='section projects'>
-        {projectsArray}
+        {arrayToJsx(projects)}
       </div>
       {/* Skills Section */}
       <div><strong>Skills</strong></div>
       <div className='section skills'>
-        {skillsArray}
+        {arrayToJsx(skills)}
       </div>
     </div>
   )

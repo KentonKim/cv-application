@@ -101,7 +101,7 @@ const workPromptData = [
 
 const projectsPromptData = [
   {
-    id: "project-name",
+    id: "project",
     label: "Project Name: ",
   },
   { 
