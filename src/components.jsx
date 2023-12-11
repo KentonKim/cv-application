@@ -36,8 +36,8 @@ const Section = ({data, onHandle, arrayOfPrompts}) => {
       formArray.push(
         <>
           <br/>
-          {multiple < 5 && <button onClick={()=> setMultiple(multiple + 1)}><strong>+</strong></button>}
-          {multiple > 1 && <button onClick={() => setMultiple(multiple-1)}><strong>-</strong></button>}
+          {multiple < 5 && <button onClick={ () => setMultiple( multiple + 1 ) }><strong>+</strong></button>}
+          {multiple > 1 && <button onClick={ () => setMultiple( multiple - 1 ) }><strong>-</strong></button>}
         </>
       )
     } else {
@@ -71,70 +71,75 @@ const convertDate = (inputDate) => {
 }
 
 const Paper = ({personal, academic, work, projects, skills}) => {
-
-  const arrayToJsx = (sectionObj) => {
+  const arrayToJsx = (sectionArray) => {
     const mountArray = []
-    const arrayOfDescriptions = []
-    let header = ''
-    let location = ''
-    let time = ''
+    let arrayOfDescriptions
+    let header
+    let location
+    let time
 
-    header += sectionObj.school ?? ""
-    header += sectionObj.position ?? ""
-    header += sectionObj.company ? ` at ${sectionObj.company}` : ""
-    header += sectionObj.project ?? "" 
-    location += sectionObj ?? ""
-    time += sectionObj['start-date'] ? convertDate(sectionObj['start-date']) : ""
-    time += sectionObj['end-date'] ? 
-      sectionObj['start-date'] ? ` - ${convertDate(sectionObj['end-date'])}` : convertDate(sectionObj['end-date']) :
-      sectionObj['start-date'] ? " - Present" : ""
-    
-    if (sectionObj.degree || sectionObj.study || sectionObj.gpa) {
-      let academicDesc = "" 
-      academicDesc += sectionObj.degree ?? ""
-      academicDesc += `in ${sectionObj.study}` ?? ""
-      academicDesc += `, ${sectionObj.gpa}` ?? ""
-      arrayOfDescriptions.push(academicDesc)
-    }
-    if (sectionObj.minor) {
-      arrayOfDescriptions.push(`Minor in ${sectionObj.minor}`)
-    }
-    Object.entries(sectionObj)
-      .filter(([key]) => key.includes('description'))
-      .map(( [ _, value]) => arrayOfDescriptions.push(value))
+    for (let sectionObj of sectionArray) {
+      arrayOfDescriptions = []
+      header = ''
+      location = ''
+      time = ''
+
+      header += sectionObj.school ?? ""
+      header += sectionObj.position ?? ""
+      header += sectionObj.company ? ` at ${sectionObj.company}` : ""
+      header += sectionObj.project ?? "" 
+      location += sectionObj ?? ""
+      time += sectionObj['start-date'] ? convertDate(sectionObj['start-date']) : ""
+      time += sectionObj['end-date'] ? 
+        sectionObj['start-date'] ? ` - ${convertDate(sectionObj['end-date'])}` : convertDate(sectionObj['end-date']) :
+        sectionObj['start-date'] ? " - Present" : ""
+      
+      if (sectionObj.degree || sectionObj.study || sectionObj.gpa) {
+        let academicDesc = "" 
+        academicDesc += sectionObj.degree ?? ""
+        academicDesc += `in ${sectionObj.study}` ?? ""
+        academicDesc += `, ${sectionObj.gpa}` ?? ""
+        arrayOfDescriptions.push(academicDesc)
+      }
+      if (sectionObj.minor) {
+        arrayOfDescriptions.push(`Minor in ${sectionObj.minor}`)
+      }
+      Object.entries(sectionObj)
+        .filter(([key]) => key.includes('description'))
+        .map(( [ _, value]) => arrayOfDescriptions.push(value))
 
 
-    mountArray.push(<div className='section-title'><strong>{header}</strong>{location}</div>)
-    mountArray.push(<div className='section-date'>{time}</div>)
-    for (let desc of arrayOfDescriptions) {
-      mountArray.push(<div className='section-title'>{desc}</div>)
+      mountArray.push(<div className='section-title'><strong>{header}</strong>{location}</div>)
+      mountArray.push(<div className='section-date'>{time}</div>)
+      for (let desc of arrayOfDescriptions) {
+        mountArray.push(<div className='section-title'>{desc}</div>)
+      }
     }
     return mountArray
   }
 
-
   return(
-    <div className="w-[8.5in] h-[11in] bg-white border-2 shadow-lg font-serif pt-[0.5in] pl-[1in] pr-[1in] text-[12pt]">
+    <div className="w-[8.5in] h-[11in] border-2 shadow-lg font-serif pt-[0.5in] pl-[1in] pr-[1in] text-[12pt]">
       {/* Personal Section */}
       <div className='section personal'>
-        <div>{personal[0].name}</div>
-        <div>{personal[0].email}</div>
-        <div>{personal[0].phone}</div>
+        <div>{personal[0].name && personal[0].name}</div>
+        <div>{personal[0].email && personal[0].email}</div>
+        <div>{personal[0].phone && personal[0].phone}</div>
       </div>
       {/* Academic Section */}
       <div><strong>Education</strong></div>
       <div className='section academic'>
-        {arrayToJsx(academic)}
+        {/* {arrayToJsx(academic)} */}
       </div>
       {/* Work Section */}
       <div><strong>Work Experience</strong></div>
       <div className='section work'>
-        {arrayToJsx(work)}
+        {/* {arrayToJsx(work)} */}
       </div>
       {/* Projects Section */}
       <div><strong>Projects</strong></div>
       <div className='section projects'>
-        {arrayToJsx(projects)}
+        {/* {arrayToJsx(projects)} */}
       </div>
       {/* Skills Section */}
       <div><strong>Skills</strong></div>
