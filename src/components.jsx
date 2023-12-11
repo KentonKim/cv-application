@@ -37,7 +37,10 @@ const Section = ({data, onHandle, arrayOfPrompts}) => {
         <>
           <br/>
           {multiple < 5 && <button onClick={ () => setMultiple( multiple + 1 ) }><strong>+</strong></button>}
-          {multiple > 1 && <button onClick={ () => setMultiple( multiple - 1 ) }><strong>-</strong></button>}
+          {multiple > 1 && <button onClick={ () => {
+            // onHandleDeleteDesc()
+            setMultiple( multiple - 1 ) 
+          }}><strong>-</strong></button>}
         </>
       )
     } else {

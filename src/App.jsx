@@ -36,6 +36,7 @@ function App() {
   const [projectsData, setProjectData] = useState([{}])
   const [skillsData, setSkillsData] = useState([{}])
 
+  // takes in array of objects and returns new array of new objects, then alters one property of one object
   const handleDataChange = (e, setStateFunc, data, index = 0) => {
     const newDataArray = data.map(sectionObj => { return {...sectionObj}})
     newDataArray[index] = { 
@@ -43,6 +44,31 @@ function App() {
       [e.target.id] : e.target.value
     }
     setStateFunc(newDataArray)
+  }
+
+  const addNewSection = (tabArray, setData, data, tabObj) => {
+    setTabArray( tabArray.map( obj => {
+      if (obj === tabObj) {
+        return {...obj, 'amount':tabObj.amount + 1}
+      } else {
+        return {...obj}
+      }
+    }))
+    const newData = data.map(dataObj => {return {...dataObj}}) 
+    setData([...newData, {}])
+  }
+
+  const delSection = (tabArray, setData, data, tabObj) => {
+    setTabArray( tabArray.map( obj => {
+      if (obj === tabObj) {
+        return {...obj, 'amount':tabObj.amount - 1}
+      } else {
+        return {...obj}
+      }
+    }))
+    const newData = data.map(dataObj => {return {...dataObj}}) 
+    newData.pop()
+    setData(newData)
   }
 
   const createSectionArray = (tabData, tabNumber, key, data, setData, arrayOfPrompts) => {
@@ -61,29 +87,8 @@ function App() {
       }
       sectionArray.push(
         <>
-          {tabObj.amount < 5 && <button onClick={() => {
-            setTabArray( tabArray.map( obj => {
-              if (obj === tabObj) {
-                return {...obj, 'amount':tabObj.amount + 1}
-              } else {
-                return {...obj}
-              }
-            }))
-            const newData = data.map(dataObj => {return {...dataObj}}) 
-            setData([...newData, {}])
-          }}><strong>+</strong></button>}
-          {tabObj.amount > 1 && <button onClick={() => {
-            setTabArray( tabArray.map( obj => {
-              if (obj === tabObj) {
-                return {...obj, 'amount':tabObj.amount - 1}
-              } else {
-                return {...obj}
-              }
-            }))
-            const newData = data.map(dataObj => {return {...dataObj}}) 
-            newData.pop()
-            setData(newData)
-          }}><strong>-</strong></button>}
+          {tabObj.amount < 5 && <button onClick={() => addNewSection(tabArray, setData, data, tabObj)}><strong>+</strong></button>}
+          {tabObj.amount > 1 && <button onClick={() => {delSection(tabArray, setData, data, tabObj)}}><strong>-</strong></button>}
         </>
       )
     } else {
