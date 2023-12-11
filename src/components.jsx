@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
-const Section = ({data, onHandle, arrayOfPrompts}) => {
+const convertDate = (inputDate) => {
+  // Parse the date
+  const parts = inputDate.split('-');
+  const month = parseInt(parts[1], 10);
+  const year = parseInt(parts[2], 10);
+
+  // Format the date
+  const formattedDate = new Date(year, month - 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  return formattedDate;
+}
+
+const Section = ({data, onHandle, onDescDel, arrayOfPrompts}) => {
   const [multiple, setMultiple] = useState(2)
   const attributes = (data, inputObj, onHandle, version = 0 ) => {
     const conditionalType = (inputObj.type && inputObj.type)
@@ -38,8 +49,10 @@ const Section = ({data, onHandle, arrayOfPrompts}) => {
           <br/>
           {multiple < 5 && <button onClick={ () => setMultiple( multiple + 1 ) }><strong>+</strong></button>}
           {multiple > 1 && <button onClick={ () => {
-            // onHandleDeleteDesc()
-            setMultiple( multiple - 1 ) 
+            setMultiple( multiple - 1)
+            if (data[`description-${multiple-1}`]) { // check that the desc to be deleted is not empty
+              onDescDel()
+            }
           }}><strong>-</strong></button>}
         </>
       )
@@ -60,17 +73,6 @@ const Section = ({data, onHandle, arrayOfPrompts}) => {
   return(
     <form>{formArray}</form>
   )
-}
-
-const convertDate = (inputDate) => {
-  // Parse the date
-  const parts = inputDate.split('-');
-  const month = parseInt(parts[1], 10);
-  const year = parseInt(parts[2], 10);
-
-  // Format the date
-  const formattedDate = new Date(year, month - 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  return formattedDate;
 }
 
 const Paper = ({personal, academic, work, projects, skills}) => {

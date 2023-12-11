@@ -46,6 +46,16 @@ function App() {
     setStateFunc(newDataArray)
   }
 
+  const handleDescDel = (setStateFunc, data, index = 0) => {
+    const newDataArray = data.map(sectionObj => { return {...sectionObj}})
+    const sectionObj = newDataArray[index]
+    const arrayDescProps = Object.keys(sectionObj).filter(word => word.includes('description'))
+    console.log(arrayDescProps)
+    delete sectionObj[arrayDescProps[arrayDescProps.length - 1]] // delete last description
+    setStateFunc(newDataArray)
+  }
+
+  // onClick function for adding/deleting sections within tab
   const onSectionAmountChange = (tabArray, setData, data, tabObj, isAdd) => {
     setTabArray( tabArray.map( obj => {
       if (obj === tabObj) {
@@ -73,7 +83,9 @@ function App() {
             key = {`${key}${i == 0 ? '' : `-${i}`}`}
             data = {data[i]}
             onHandle = {(e) => {handleDataChange(e, setData, data, i)}}
+            onDescDel= {() => {handleDescDel(setData, data, i)}}
             arrayOfPrompts = {arrayOfPrompts}
+            // onDescDel={() => handleDescDel(setData, data, i)}
           />
         )
       }
@@ -84,12 +96,15 @@ function App() {
         </>
       )
     } else {
-      sectionArray.push(<Section 
-        key = {key} 
-        data = {data[0]}
-        onHandle = {(e) => {handleDataChange(e, setData, data)}}
-        arrayOfPrompts = {arrayOfPrompts}
-      />)
+      sectionArray.push(
+        <Section 
+          key = {key} 
+          data = {data[0]}
+          onHandle = {(e) => {handleDataChange(e, setData, data)}}
+          onDescDel= {() => {handleDescDel(setData, data)}}
+          arrayOfPrompts = {arrayOfPrompts}
+        />
+      )
     }
     return sectionArray
   }
