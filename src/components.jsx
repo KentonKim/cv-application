@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import dropdown from './assets/dropdown.svg'
 
 const convertDate = (inputDate) => {
   // Parse the date
@@ -11,8 +12,9 @@ const convertDate = (inputDate) => {
   return formattedDate;
 }
 
-const Section = ({data, onHandle, onDescDel, arrayOfPrompts}) => {
+const Section = ({data, onHandle, onDescDel, arrayOfPrompts, isMultiSection}) => {
   const [multiple, setMultiple] = useState(2)
+  const [isShowing, setShow] = useState(true)
   const attributes = (data, inputObj, onHandle, version = 0 ) => {
     const conditionalType = (inputObj.type && inputObj.type)
     const conditionalPlaceholder = (inputObj.example && inputObj.example)
@@ -38,12 +40,9 @@ const Section = ({data, onHandle, onDescDel, arrayOfPrompts}) => {
             <label 
               key={`${inputObj.id}${i == 0 ? '-' : `-${i}-`}label`}
               htmlFor={`${inputObj.id}${i == 0 ? '' : `-${i}` }`}
-              className='inline-block w-[150px]'
+              className='inline-block w-32 align-top m-1'
             >{inputObj.label}</label>
-            { inputObj.isLongResponse ?
-              <textarea className='resize-none' {...attributes(data, inputObj, onHandle, i)}></textarea> :
-              <input {...attributes(data, inputObj, onHandle, i)}></input>
-            }
+            <textarea className='h-[100px] resize-none w-60 mt-1' {...attributes(data, inputObj, onHandle, i)}></textarea>
             { (inputObj != arrayOfPrompts[arrayOfPrompts.length - 1] || i != multiple - 1) && <br/> }
           </>
         )
@@ -51,13 +50,16 @@ const Section = ({data, onHandle, onDescDel, arrayOfPrompts}) => {
       formArray.push(
         <>
           <br/>
-          {multiple < 5 && <button onClick={ () => setMultiple( multiple + 1 ) }><strong>+</strong></button>}
-          {multiple > 1 && <button onClick={ () => {
-            setMultiple( multiple - 1)
-            if (data[`description-${multiple-1}`]) { // check that the desc to be deleted is not empty
-              onDescDel()
-            }
-          }}><strong>-</strong></button>}
+          {multiple < 5 && <button onClick={ () => setMultiple( multiple + 1 ) }><strong>Add Description</strong></button>}
+          {multiple > 1 && multiple < 5 && <>{' / '}</>}
+          {multiple > 1 && 
+            <button onClick={ () => {
+              setMultiple( multiple - 1)
+              if (data[`description-${multiple-1}`]) { // check that the desc to be deleted is not empty
+                onDescDel()
+              }
+            }}><strong>Remove Description</strong></button>
+          }
         </>
       )
     } else {
@@ -66,12 +68,9 @@ const Section = ({data, onHandle, onDescDel, arrayOfPrompts}) => {
           <label 
             key={`${inputObj.id}-label`}
             htmlFor={inputObj.id}
-            className='inline-block w-[150px]'
+            className='inline-block w-32 m-1'
           >{inputObj.label}</label>
-          { inputObj.isLongResponse ?
-            <textarea className='resize-none' {...attributes(data, inputObj, onHandle)}></textarea> :
-            <input {...attributes(data, inputObj, onHandle)}></input>
-          }
+          <input className='w-60' {...attributes(data, inputObj, onHandle)}></input>
           { inputObj != arrayOfPrompts[arrayOfPrompts.length - 1] && <br/> }
         </>
       )
@@ -79,7 +78,20 @@ const Section = ({data, onHandle, onDescDel, arrayOfPrompts}) => {
   })
 
   return(
-    <form>{formArray}</form>
+    <div className='section-container'>
+      {isMultiSection && 
+      <div className='section-title-container flex justify-between px-4'>
+        <div className='section-title align-middle text-2xl truncate w-96 text-left'>
+          {data.school || data.company || data.project}
+        </div>
+        {/* <button onClick={() => setShow(!isShowing)}>{dropdown}</button> */}
+        <button className=' p-0' onClick={() => setShow(!isShowing)}>
+          <img src={dropdown} className='w-10 h-10'/>
+        </button>
+      </div>
+      }
+      {isShowing && <form className='pl-0'>{formArray}</form>}
+    </div>
   )
 }
 
@@ -123,7 +135,7 @@ const Paper = ({personal, academic, work, projects, skills}) => {
         .map(( [ _, value]) => arrayOfDescriptions.push(value))
 
       if (header != "") {
-        mountArray.push(<div className='section-title'><strong>{header}</strong>{location}</div>)
+        mountArray.push(<div className='section-header'><strong>{header}</strong>{location}</div>)
       }
       if (time != "") {
         mountArray.push(<div className='section-date'>{time}</div>)
@@ -188,6 +200,7 @@ const DraggableButton = ({handleClick, text}) => {
     <button 
       ref={buttonRef}
       onClick={handleClick}
+      className='tab'
       onMouseDown={() => {
         document.addEventListener('mouseup', handleMouseUp)
       }}
@@ -196,12 +209,3 @@ const DraggableButton = ({handleClick, text}) => {
 };
 
 export {Section, Paper, DraggableButton}
-
-
-/*
-mouse down
-- adds event listener for mouseup
-mouse up
-- clears event listener
-- if the mouse is to the left or right of button, change order
-*/
