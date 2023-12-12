@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 :root {
+  --dark-gray: #5D5C51;
+  --light-gray: #aeada8;
+  --light-blue: #7395AE;
+  --blue: #2779a7;
+  --dark-blue: #557A95;
+  --brown: #B1A296
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
