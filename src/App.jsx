@@ -73,7 +73,7 @@ function App() {
     }
   }
 
-  const createSectionArray = (tabData, tabNumber, key, data, setData, arrayOfPrompts) => {
+  const createSectionArray = (tabData, tabNumber, key, data, setData, arrayOfPrompts, isMultiSection = true) => {
     const tabObj = tabData[tabNumber]
     const sectionArray = []
     if (tabObj.amount) {
@@ -85,14 +85,16 @@ function App() {
             onHandle = {(e) => {handleDataChange(e, setData, data, i)}}
             onDescDel= {() => {handleDescDel(setData, data, i)}}
             arrayOfPrompts = {arrayOfPrompts}
+            isMultiSection = {isMultiSection}
             // onDescDel={() => handleDescDel(setData, data, i)}
           />
         )
       }
       sectionArray.push(
         <>
-          {tabObj.amount < 5 && <button onClick={() => onSectionAmountChange(tabArray, setData, data, tabObj, true)}><strong>+</strong></button>}
-          {tabObj.amount > 1 && <button onClick={() => onSectionAmountChange(tabArray, setData, data, tabObj, false)}><strong>-</strong></button>}
+          {tabObj.amount < 5 && <button onClick={() => onSectionAmountChange(tabArray, setData, data, tabObj, true)}><strong>{`Add ${tabObj.tabName} Section`}</strong></button>}
+          {tabObj.amount > 1 && tabObj.amount < 5 && <>{" / "}</>}
+          {tabObj.amount > 1 && <button onClick={() => onSectionAmountChange(tabArray, setData, data, tabObj, false)}><strong>Remove Section</strong></button>}
         </>
       )
     } else {
@@ -110,40 +112,36 @@ function App() {
   }
 
   return (
-    <div id='content' className="flex items-stretch justify-between gap-1">
+    <div id='content' className="flex items-stretch justify-between gap-16">
       <div id='left-side' className="">
-        <div> {/* form customizer */}
-          <div className='flex'> { /* form header */ }
-            {tabArray.map( tabObj => (
-              <DraggableButton key={tabObj.tabName} text={tabObj.tabName} handleClick={ () => {
-                setTabArray( tabArray.map( obj => {
-                  if (obj === tabObj) {
-                    return {...obj, 'isSelected':true}
-                  } else {
-                    return {...obj , 'isSelected':false}
-                  }
-                }))
-              }}/>
-            ))}
-          </div>
+        <div className='tab-container flex'> { /* form header */ }
+          {tabArray.map( tabObj => (
+            <DraggableButton key={tabObj.tabName} text={tabObj.tabName} handleClick={ () => {
+              setTabArray( tabArray.map( obj => {
+                if (obj === tabObj) {
+                  return {...obj, 'isSelected':true}
+                } else {
+                  return {...obj , 'isSelected':false}
+                }
+              }))
+            }}/>
+          ))}
         </div>
-        <div> { /* Holder for the information shit */ }
-          {tabArray[0]['isSelected'] && 
-            createSectionArray(tabArray, 0, 'personalSection', personalData, setPersonalData, personalPromptData)
-          }
-          {tabArray[1]['isSelected'] && 
-            createSectionArray(tabArray, 1, 'academicSection', academicData, setAcademicData, schoolPromptData)
-          } 
-          {tabArray[2]['isSelected'] &&
-            createSectionArray(tabArray, 2, 'workSection', workData, setWorkData, workPromptData)
-          }
-          {tabArray[3]['isSelected'] &&
-            createSectionArray(tabArray, 3, 'projectsSection', projectsData, setProjectData, projectsPromptData)
-          }
-          {tabArray[4]['isSelected'] &&
-            createSectionArray(tabArray, 4, 'skillsSection', skillsData, setSkillsData, skillsPromptData)
-          }
-        </div>
+        {tabArray[0]['isSelected'] && 
+          createSectionArray(tabArray, 0, 'personalSection', personalData, setPersonalData, personalPromptData, false)
+        }
+        {tabArray[1]['isSelected'] && 
+          createSectionArray(tabArray, 1, 'academicSection', academicData, setAcademicData, schoolPromptData)
+        } 
+        {tabArray[2]['isSelected'] &&
+          createSectionArray(tabArray, 2, 'workSection', workData, setWorkData, workPromptData)
+        }
+        {tabArray[3]['isSelected'] &&
+          createSectionArray(tabArray, 3, 'projectsSection', projectsData, setProjectData, projectsPromptData)
+        }
+        {tabArray[4]['isSelected'] &&
+          createSectionArray(tabArray, 4, 'skillsSection', skillsData, setSkillsData, skillsPromptData, false)
+        }
       </div>
       <div id='right-side'>
         <Paper personal={personalData} academic={academicData} work={workData} projects={projectsData} skills={skillsData} />
