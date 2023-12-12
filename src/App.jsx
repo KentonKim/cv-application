@@ -110,10 +110,10 @@ function App() {
   }
 
   return (
-    <div id='content' className="flex items-stretch justify-between gap-16">
+    <div id='content' className="flex items-stretch justify-between gap-1">
       <div id='left-side' className="">
         <div> {/* form customizer */}
-          <div> { /* form header */ }
+          <div className='flex'> { /* form header */ }
             {tabArray.map( tabObj => (
               <DraggableButton key={tabObj.tabName} text={tabObj.tabName} handleClick={ () => {
                 setTabArray( tabArray.map( obj => {

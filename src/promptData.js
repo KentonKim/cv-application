@@ -55,7 +55,7 @@ const schoolPromptData = [
   { 
     id: "minor",
     label: "Minor:",
-    example: "Musical Performance",
+    example: "Musical Theater",
   },
   { 
     id: "gpa",
