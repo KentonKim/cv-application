@@ -105,6 +105,11 @@ const projectsPromptData = [
     label: "Project Name: ",
   },
   { 
+    id: "location",
+    label: "Location: ",
+    example: "City, State",
+  },
+  { 
     id: "start-date",
     label: "Start Date: ",
     type: "date"
