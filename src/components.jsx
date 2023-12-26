@@ -142,9 +142,9 @@ const Paper = ({personal, academic, work, projects, skills}) => {
       }
 
       mountArray.push(
-        <ul className='section-description-list'>
+        <ul className='section-description-list basis-full mb-3'>
           {arrayOfDescriptions.map( desc => (
-            <li key={desc} className='section-description'>{desc}</li>
+            <li key={desc} className='section-description text-left'>{`• ${desc}`}</li>
           ))}
         </ul>
       )
@@ -156,28 +156,29 @@ const Paper = ({personal, academic, work, projects, skills}) => {
     <div className="w-[8.5in] h-[11in] border-2 shadow-lg font-serif pt-[0.5in] pl-[1in] pr-[1in] text-[12pt]">
       {/* Personal Section */}
       <div className='section personal'>
-        <div>{personal[0].name && personal[0].name}</div>
-        <div>{personal[0].email && personal[0].email}</div>
-        <div>{personal[0].phone && personal[0].phone}</div>
+        <div className='text-2xl'>{personal[0].name && personal[0].name}</div>
+        <div className='inline'>{personal[0].email && personal[0].email}</div>
+        <div className='inline'>{(personal[0].email && personal[0].phone) && "  "}</div>
+        <div className='inline'>{personal[0].phone && personal[0].phone}</div>
       </div>
       {/* Academic Section */}
-      <div><strong>Education</strong></div>
-      <div className='section academic'>
+      <div className="text-left border-b-2 text-lg my-1"><strong>Education</strong></div>
+      <div className='section academic flex flex-wrap justify-between'>
         {arrayToJsx(academic)}
       </div>
       {/* Work Section */}
-      <div><strong>Work Experience</strong></div>
-      <div className='section work'>
+      <div className='text-left border-b-2 text-lg mb-1'><strong>Work Experience</strong></div>
+      <div className='section work flex flex-wrap justify-between'>
         {arrayToJsx(work)}
       </div>
       {/* Projects Section */}
-      <div><strong>Projects</strong></div>
-      <div className='section projects'>
+      <div className='text-left border-b-2 text-lg mb-1'><strong>Projects</strong></div>
+      <div className='section projects flex flex-wrap justify-between'>
         {arrayToJsx(projects)}
       </div>
       {/* Skills Section */}
-      <div><strong>Skills</strong></div>
-      <div className='section skills'>
+      <div className='text-left border-b-2 text-lg mb-1'><strong>Skills</strong></div>
+      <div className='section skills flex flex-wrap justify-between'>
         {arrayToJsx(skills)}
       </div>
     </div>
