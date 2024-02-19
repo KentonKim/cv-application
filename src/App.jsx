@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Paper, Section, DraggableButton} from './components'
 import './App.css'
 import { personalPromptData, schoolPromptData, workPromptData, projectsPromptData, skillsPromptData } from './promptData'
 
-function App() {
+export default function App() {
   const [tabArray, setTabArray] = useState([
     {
       tabName: "Personal",
@@ -111,6 +111,8 @@ function App() {
     return sectionArray
   }
 
+
+
   return (
     <div id='content' className="flex items-stretch justify-between gap-16">
       <div id='left-side' className="">
@@ -149,5 +151,3 @@ function App() {
     </div>
   )
 }
-
-export default App
