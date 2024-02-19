@@ -11,37 +11,48 @@ const Form = () => {
     selectedTab,
     setSelectedTab,
     personalData,
+    setPersonalData,
     academicData,
+    setAcademicData,
     workData,
+    setWorkData,
     projectsData,
-    skillsData
+    setProjectsData,
+    skillsData,
+    setSkillsData,
   } = useContext(ResumeContext)
   const handleClick = (string) => {
     setSelectedTab(string)
   }
   const [referenceData, setReferenceData] = useState(personalData)
+  const [referenceDataSetter, setReferenceDataSetter] = useState(setPersonalData)
   const [prompt, setPrompt] = useState([])
 
   useEffect(() => {
     switch (selectedTab) {
     case 'personal':
       setReferenceData(personalData)
+      setReferenceDataSetter(setPersonalData)
       setPrompt(personalPromptData)
       break
     case 'academic':
       setReferenceData(academicData)
+      setReferenceDataSetter(setAcademicData)
       setPrompt(schoolPromptData)
       break
     case 'work':
       setReferenceData(workData)
+      setReferenceDataSetter(setWorkData)
       setPrompt(workPromptData)
       break
     case 'projects':
       setReferenceData(projectsData)
+      setReferenceDataSetter(setProjectsData)
       setPrompt(projectsPromptData)
       break
     case 'skills':
       setReferenceData(skillsData)
+      setReferenceDataSetter(setSkillsData)
       setPrompt(skillsPromptData)
       break
     default:
@@ -58,7 +69,11 @@ const Form = () => {
         <Tab key='projects' text='Projects' handleClick={() => handleClick('projects')}/>
         <Tab key='skills' text='Skills' handleClick={() => handleClick('skills')}/>
       </div>
-      <DataContext.Provider value={{referenceData, prompt}}>
+      <DataContext.Provider value={{
+        referenceData, 
+        referenceDataSetter,
+        prompt
+      }}>
         <TabForm />
       </DataContext.Provider>
     </div>
