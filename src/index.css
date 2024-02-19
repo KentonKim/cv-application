@@ -81,3 +81,7 @@ button:focus-visible {
 * {
   border: 1px solid green;
 }
+
+button:disabled {
+  background-color: red;
+}

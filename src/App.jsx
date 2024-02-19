@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import { Paper, Section, DraggableButton} from './components'
 import './App.css'
 import { personalPromptData, schoolPromptData, workPromptData, projectsPromptData, skillsPromptData } from './promptData'
@@ -154,8 +154,8 @@ export function CrApp() {
 }
 
 
+export const ResumeContext = createContext(null)
 export default function App() {
-  const ResumeContext = useContext(null)
   const [ selectedTab, setSelectedTab ] = useState('personal')
   const [ sectionAmounts, setSectionAmounts ] = useState({
     personal: 1,
@@ -169,7 +169,10 @@ export default function App() {
   return (
     <ResumeContext.Provider
       value={{
-
+        selectedTab,
+        setSelectedTab,
+        sectionAmounts,
+        setSectionAmounts
       }}>
       <Form />
       {/* <Paper /> */}
