@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import Section from './Section'
 import { ResumeContext } from './App'
 import SectionIncrementer from './features/SectionIncrementer'
+import PropTypes from 'prop-types'
 
 export const DataContext = createContext(null)
 
@@ -37,3 +38,9 @@ const TabForm = ({data, setData, prompt}) => {
 }
 
 export default TabForm
+
+TabForm.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object),
+  setData: PropTypes.func.isRequired,
+  prompt: PropTypes.arrayOf(PropTypes.object),
+}
