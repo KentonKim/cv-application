@@ -164,6 +164,11 @@ export default function App() {
     projects: 1,
     skills: 1,
   })
+  const [personalData, setPersonalData] = useState([{}])
+  const [academicData, setAcademicData] = useState([{}])
+  const [workData, setWorkData] = useState([{}])
+  const [projectsData, setProjectData] = useState([{}])
+  const [skillsData, setSkillsData] = useState([{}])
 
 
   return (
@@ -172,7 +177,17 @@ export default function App() {
         selectedTab,
         setSelectedTab,
         sectionAmounts,
-        setSectionAmounts
+        setSectionAmounts,
+        personalData,
+        setPersonalData,
+        academicData,
+        setAcademicData,
+        workData,
+        setWorkData,
+        projectsData,
+        setProjectData,
+        skillsData,
+        setSkillsData,
       }}>
       <Form />
       {/* <Paper /> */}

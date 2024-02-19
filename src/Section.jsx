@@ -5,10 +5,10 @@ const Section = () => {
   const lineArr = []
 
   return (
-    <>
+    <div>
       {lineArr}
       <Line />
-    </>
+    </div>
   )
 }
 

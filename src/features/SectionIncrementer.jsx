@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { ResumeContext } from "../App"
 
-const SectionCounter = () => {
+const SectionIncrementer = () => {
   const { selectedTab, sectionAmounts, setSectionAmounts } = useContext(ResumeContext)
   const [isAddDisabled, setIsAddDisabled] = useState(false)
   const [isMinusDisabled, setIsMinusDisabled] = useState(false)
@@ -29,11 +29,11 @@ const SectionCounter = () => {
   }
 
   return (
-    <>
+    <div>
       <button onClick={() => incrementSection(1)} disabled={isAddDisabled}>+</button>
       <button onClick={() => incrementSection(-1)} disabled={isMinusDisabled}>-</button>
-    </>
+    </div>
   )
 }
 
-export default SectionCounter
+export default SectionIncrementer
