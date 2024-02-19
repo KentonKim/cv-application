@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react'
 import { Paper, Section, DraggableButton} from './components'
 import './App.css'
 import { personalPromptData, schoolPromptData, workPromptData, projectsPromptData, skillsPromptData } from './promptData'
+import Form from './Form'
 
-export default function App() {
+export function CrApp() {
   const [tabArray, setTabArray] = useState([
     {
       tabName: "Personal",
@@ -149,5 +150,15 @@ export default function App() {
         <Paper personal={personalData} academic={academicData} work={workData} projects={projectsData} skills={skillsData} />
       </div>
     </div>
+  )
+}
+
+
+export default function App() {
+  return (
+    <>
+      <Form />
+      {/* <Paper /> */}
+    </>
   )
 }
