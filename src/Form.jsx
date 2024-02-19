@@ -1,10 +1,8 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import Tab from './Tab'
 import TabForm from './TabForm'
 import { ResumeContext } from './App'
 import { personalPromptData, projectsPromptData, schoolPromptData, skillsPromptData, workPromptData } from './promptData'
-
-const DataContext = createContext(null)
 
 const Form = () => {
   const { 
@@ -22,42 +20,6 @@ const Form = () => {
     setSkillsData,
   } = useContext(ResumeContext)
   
-  const [referenceData, setReferenceData] = useState(personalData)
-  const [referenceDataSetter, setReferenceDataSetter] = useState(setPersonalData)
-  const [prompt, setPrompt] = useState([])
-
-  useEffect(() => {
-    switch (selectedTab) {
-    case 'personal':
-      setReferenceData(personalData)
-      setReferenceDataSetter(setPersonalData)
-      setPrompt(personalPromptData)
-      break
-    case 'academic':
-      setReferenceData(academicData)
-      setReferenceDataSetter(setAcademicData)
-      setPrompt(schoolPromptData)
-      break
-    case 'work':
-      setReferenceData(workData)
-      setReferenceDataSetter(setWorkData)
-      setPrompt(workPromptData)
-      break
-    case 'projects':
-      setReferenceData(projectsData)
-      setReferenceDataSetter(setProjectsData)
-      setPrompt(projectsPromptData)
-      break
-    case 'skills':
-      setReferenceData(skillsData)
-      setReferenceDataSetter(setSkillsData)
-      setPrompt(skillsPromptData)
-      break
-    default:
-      throw new Error(`selected tab has unexpected value: ${selectedTab}`)
-    }
-  }, [selectedTab, personalData, academicData, workData, projectsData, skillsData])
-
   return (
     <div className='flex flex-col'>
       <div>
@@ -67,13 +29,16 @@ const Form = () => {
         <Tab key='projects' text='Projects' handleClick={() => setSelectedTab('projects')}/>
         <Tab key='skills' text='Skills' handleClick={() => setSelectedTab('skills')}/>
       </div>
-      <DataContext.Provider value={{
-        referenceData, 
-        referenceDataSetter,
-        prompt
-      }}>
-        <TabForm />
-      </DataContext.Provider>
+      { selectedTab === 'personal'
+        ? <TabForm data={personalData} setData={setPersonalData} prompt={personalPromptData} />
+        : (selectedTab === 'academic'
+          ? <TabForm data={academicData} setData={setAcademicData} prompt={schoolPromptData} />
+          : (selectedTab === 'work'
+            ? <TabForm data={workData} setData={setWorkData} prompt={workPromptData} />
+            : (selectedTab === 'projects'
+              ? <TabForm data={projectsData} setData={setProjectsData} prompt={projectsPromptData} />
+              : <TabForm data={skillsData} setData={setSkillsData} prompt={skillsPromptData} />)))
+      }
     </div>
   )
 }

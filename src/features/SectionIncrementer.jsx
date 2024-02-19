@@ -1,37 +1,31 @@
 import { useContext, useEffect, useState } from "react"
-import { ResumeContext } from "../App"
+import { DataContext } from "../TabForm"
 
 const SectionIncrementer = () => {
-  const { selectedTab, sectionAmounts, setSectionAmounts } = useContext(ResumeContext)
+  const { data, setData } = useContext(DataContext)
   const [isAddDisabled, setIsAddDisabled] = useState(false)
-  const [isMinusDisabled, setIsMinusDisabled] = useState(false)
+  // const [isMinusDisabled, setIsMinusDisabled] = useState(false)
 
   useEffect(() => {
-    if (sectionAmounts[selectedTab] === 1) {
-      setIsMinusDisabled(true)
-    } else {
-      setIsMinusDisabled(false)
-    }
+    const sectionAmount = data.length
 
-    if (sectionAmounts[selectedTab] === 3) {
+    if (sectionAmount === 3) {
       setIsAddDisabled(true)
     } else {
       setIsAddDisabled(false)
     }
-  }, [sectionAmounts, selectedTab])
+  }, [data])
 
-  const incrementSection = (amount) => {
-    setSectionAmounts({
-      ...sectionAmounts,
-      [selectedTab] : sectionAmounts[selectedTab] + amount
-    })
-    console.log(sectionAmounts)
+  const incrementSection = () => {
+    const tempDataArr = [...data]
+    // add new empty section
+    tempDataArr.push({})
+    setData(tempDataArr)
   }
 
   return (
     <div>
-      <button onClick={() => incrementSection(1)} disabled={isAddDisabled}>+</button>
-      <button onClick={() => incrementSection(-1)} disabled={isMinusDisabled}>-</button>
+      <button onClick={() => incrementSection()} disabled={isAddDisabled}>+</button>
     </div>
   )
 }

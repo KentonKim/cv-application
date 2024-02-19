@@ -1,10 +1,12 @@
-import { useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import Section from './Section'
 import { ResumeContext } from './App'
 import SectionIncrementer from './features/SectionIncrementer'
 
-const TabForm = ({data}) => {
-  const { selectedTab, sectionAmounts } = useContext(ResumeContext)
+export const DataContext = createContext(null)
+
+const TabForm = ({data, setData, prompt}) => {
+  const { selectedTab } = useContext(ResumeContext)
   const [ sections, setSections ] = useState([]) 
 
   useEffect(() => {
@@ -16,18 +18,21 @@ const TabForm = ({data}) => {
       )
     }
     setSections(sectionsArr)
-  }, [selectedTab, sectionAmounts])
+  }, [data])
 
   return (
-    <div className='flex flex-col'>
-      {sections}
-      { 
-      // if personal and section, omit this component
-      }
-      {(selectedTab !== 'personal' && selectedTab !== 'skills') &&
-        <SectionIncrementer />
-      }
-    </div>
+    <DataContext.Provider value={{
+      data,
+      setData,
+      prompt
+    }}>
+      <div className='flex flex-col'>
+        {sections}
+        {(selectedTab !== 'personal' && selectedTab !== 'skills') &&
+          <SectionIncrementer />
+        }
+      </div>
+    </DataContext.Provider>
   )
 }
 
