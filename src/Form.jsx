@@ -21,9 +21,7 @@ const Form = () => {
     skillsData,
     setSkillsData,
   } = useContext(ResumeContext)
-  const handleClick = (string) => {
-    setSelectedTab(string)
-  }
+  
   const [referenceData, setReferenceData] = useState(personalData)
   const [referenceDataSetter, setReferenceDataSetter] = useState(setPersonalData)
   const [prompt, setPrompt] = useState([])
@@ -63,11 +61,11 @@ const Form = () => {
   return (
     <div className='flex flex-col'>
       <div>
-        <Tab key='personal' text='Personal' handleClick={() => handleClick('personal')} />
-        <Tab key='academic' text='Academic' handleClick={() => handleClick('academic')}/>
-        <Tab key='work' text='Work' handleClick={() => handleClick('work')}/>
-        <Tab key='projects' text='Projects' handleClick={() => handleClick('projects')}/>
-        <Tab key='skills' text='Skills' handleClick={() => handleClick('skills')}/>
+        <Tab key='personal' text='Personal' handleClick={() => setSelectedTab('personal')} />
+        <Tab key='academic' text='Academic' handleClick={() => setSelectedTab('academic')}/>
+        <Tab key='work' text='Work' handleClick={() => setSelectedTab('work')}/>
+        <Tab key='projects' text='Projects' handleClick={() => setSelectedTab('projects')}/>
+        <Tab key='skills' text='Skills' handleClick={() => setSelectedTab('skills')}/>
       </div>
       <DataContext.Provider value={{
         referenceData, 
