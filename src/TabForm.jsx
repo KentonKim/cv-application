@@ -10,13 +10,17 @@ const TabForm = ({data, setData, prompt}) => {
   const { selectedTab } = useContext(ResumeContext)
   const [ sections, setSections ] = useState([]) 
 
+  // add amount of sections that exist within the tab
   useEffect(() => {
     const sectionsArr = []
-    // add amount of sections that exist within the tab
-    for (let i = 0; i < data.length; i += 1) {
-      sectionsArr.push(
-        <Section />
-      )
+    if (data.length === 1) {
+      sectionsArr.push(<Section sectionData={data[0]} isOnlySection={true} />)
+    } else {
+      for (let i = 0; i < data.length; i += 1) {
+        sectionsArr.push(
+          <Section key={`section-${i}`} sectionData={data[i]}/>
+        )
+      }
     }
     setSections(sectionsArr)
   }, [data])
@@ -29,8 +33,10 @@ const TabForm = ({data, setData, prompt}) => {
     }}>
       <div className='flex flex-col'>
         {sections}
-        {(selectedTab !== 'personal' && selectedTab !== 'skills') &&
-          <SectionIncrementer />
+        {selectedTab !== 'personal'
+        && selectedTab !== 'skills' 
+        && data.length < 3
+        && <SectionIncrementer />
         }
       </div>
     </DataContext.Provider>

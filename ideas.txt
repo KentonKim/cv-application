@@ -1,13 +1,5 @@
-- can switch tabs (personal, academic, work, projects, skills)
-- tabs can have multiple sections
-- tabs can add or remove sections ( [1,4] )
-
-- sections have labels+inputs
-- changing inputs will change top level data
-
-- sections have unchangeable slots and changeable descriptions
-- sections can add or remove descriptions ( [1,4] )
-- 
+fill up sections with prompts
+if there is a ismultiple, add multiple ability
 
 
 
